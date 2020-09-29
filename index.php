@@ -129,32 +129,17 @@ switch($request_method)
             case 'users': 
                 $header = getallheaders();
                 $token = $header['token'];
-                $legajo = $_POST['legajo'] ?? "";
-                $idMateria = $_POST['idMateria'] ?? 0;
                 $turno = $_POST['turno'] ?? "";
+
                 $usuarioLogueado = Token::VerificarToken($token);
+                $usuarioLogueadoArray = (array) $usuarioLogueado;
 
                 if (!$usuarioLogueado) {
                     $datos = "token incorrecto";
                 }
                 else{
-                    //Leo json de materias
-                    $listaDeMaterias = Archivos::leerJson('materias.json', $listaDeMaterias);
-
-                    //Leo json de profesores
-                    $listaProfes = Archivos::leerJson('profesores.json', $listaProfes);
+                    $datos = "";
                     
-                    //leo json de materias-profesores
-                    $listaDeMateriasProfe = Archivos::leerJson('materias-profesores.json', $listaDeMateriasProfe);
-                    $profesorMateria = Profesor::asignarMateria($listaDeMaterias,$listaProfes,$listaDeMateriasProfe, $legajo,$idMateria,$turno);
-                    
-                    if($profesorMateria instanceof Profesor && $profesorMateria != null){
-                        Archivos::guardarJson($profesorMateria,'materias-profesores.json');
-                        $datos = "Se agrego el profesor a la materia}";
-                    }
-                    else{
-                        $datos = $profesorMateria;
-                    }
                 }
             break;
             

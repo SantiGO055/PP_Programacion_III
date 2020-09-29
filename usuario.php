@@ -10,15 +10,13 @@ class Usuario{
     public $imagenNombre;
     public $tipo;
 
-    public function __construct($email, $clave, $imagenNombre,$tipo)
+    public function __construct($email, $clave, $imagenNombre,$tipo = NULL)
     {
         $this->setEmail($email);
         $this->clave = $clave;
         $this->imagenNombre = $imagenNombre;
-
-        if ($tipo != NULL) {
-            $this->$tipo = $tipo;
-        }
+        
+        $this->$tipo = $tipo;
         
     }
     
